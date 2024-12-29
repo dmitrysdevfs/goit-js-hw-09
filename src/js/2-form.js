@@ -3,6 +3,7 @@ let formData = {
   message: '',
 };
 
+const STORAGE_KEY = 'feedback-form-state';
 const feedbackFormEl = document.querySelector('.feedback-form');
 
 const fillFormFields = () => {
@@ -11,9 +12,7 @@ const fillFormFields = () => {
       return;
     }
 
-    const formDataFromLS = JSON.parse(
-      localStorage.getItem('feedback-form-state')
-    );
+    const formDataFromLS = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
     formData = formDataFromLS;
 
@@ -32,11 +31,11 @@ const onFormFieldChange = event => {
     target: { name: fieldName, value: fieldValue },
   } = event;
 
-  console.log(`${fieldName}: ${fieldValue}`);
+  // console.log(`${fieldName}: ${fieldValue}`);
 
   formData[fieldName] = fieldValue.trim();
 
-  localStorage.setItem('feedback-form-state', JSON.stringify(formData));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
 };
 
 const onFeedbackFormSubmit = event => {
@@ -52,7 +51,7 @@ const onFeedbackFormSubmit = event => {
   formData = { email: '', message: '' };
 
   event.currentTarget.reset();
-  localStorage.removeItem('feedback-form-state');
+  localStorage.removeItem(STORAGE_KEY);
 };
 
 feedbackFormEl.addEventListener('input', onFormFieldChange);
