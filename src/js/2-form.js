@@ -8,11 +8,11 @@ const feedbackFormEl = document.querySelector('.feedback-form');
 
 const fillFormFields = () => {
   try {
-    if (localStorage.length === 0) {
+    const formDataFromLS = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+    if (formDataFromLS === null) {
       return;
     }
-
-    const formDataFromLS = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
     formData = formDataFromLS;
 
@@ -26,7 +26,7 @@ const fillFormFields = () => {
 
 fillFormFields();
 
-const onFormFieldChange = event => {
+const onFormFieldInput = event => {
   const {
     target: { name: fieldName, value: fieldValue },
   } = event;
@@ -54,5 +54,5 @@ const onFeedbackFormSubmit = event => {
   localStorage.removeItem(STORAGE_KEY);
 };
 
-feedbackFormEl.addEventListener('input', onFormFieldChange);
+feedbackFormEl.addEventListener('input', onFormFieldInput);
 feedbackFormEl.addEventListener('submit', onFeedbackFormSubmit);
